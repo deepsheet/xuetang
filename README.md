@@ -194,7 +194,7 @@ $env:MYSQL_PWD = ((Get-Content 'C:\ProgramData\ApprenticeAttendance\secrets\mysq
   Where-Object { $_ -like 'password=*' }) -split '=',2)[1]
 & 'C:\Program Files\MySQL\MySQL Server 8.4\bin\mysqldump.exe' `
   --protocol=TCP -h 127.0.0.1 -P 3306 -u root --single-transaction `
-  apprentice_attendance > 'C:\ProgramData\ApprenticeAttendance\backups\attendance.sql'
+  xueting > 'C:\ProgramData\ApprenticeAttendance\backups\attendance.sql'
 Remove-Item Env:MYSQL_PWD
 ```
 

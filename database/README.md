@@ -7,7 +7,7 @@
 | MySQL 版本 | 8.4.9 Community Server |
 | Windows 服务 | `MySQL84` |
 | 监听地址 | `127.0.0.1:3306` |
-| 数据库 | `apprentice_attendance` |
+| 数据库 | `xueting` |
 | 字符集 / 排序 | `utf8mb4` / `utf8mb4_0900_ai_ci` |
 | 服务端时区 | `+00:00`，所有时间按 UTC 存储 |
 
@@ -18,9 +18,9 @@
 | 账号 | 权限 |
 | --- | --- |
 | `root@localhost` | 仅用于本机维护、建表和备份 |
-| `attendance_admin@localhost` | `apprentice_attendance` 内的全部权限，供 SQLPro 管理表结构 |
+| `attendance_admin@localhost` | `xueting` 内的全部权限，供 SQLPro 管理表结构 |
 | `attendance_admin@127.0.0.1` | 同上，供 SQLPro 通过 TCP 连接 |
-| `attendance_app@localhost` | `apprentice_attendance` 的 SELECT / INSERT / UPDATE / DELETE |
+| `attendance_app@localhost` | `xueting` 的 SELECT / INSERT / UPDATE / DELETE |
 | `attendance_app@127.0.0.1` | 同上，供 Node 通过 TCP 连接 |
 
 应用账号没有建库、建表、删表权限。数据库结构管理使用 `attendance_admin` 或 root。
@@ -30,7 +30,7 @@ SQLPro 连接信息：
 ```text
 主机：127.0.0.1
 端口：3306
-数据库：apprentice_attendance
+数据库：xueting
 用户：attendance_admin
 密码：C:\ProgramData\ApprenticeAttendance\secrets\mysql-admin.txt
 ```
@@ -52,7 +52,7 @@ C:\ProgramData\ApprenticeAttendance\config\database.env
 ```dotenv
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_NAME=apprentice_attendance
+DB_NAME=xueting
 DB_USER=attendance_app
 DB_PASSWORD=...
 DB_CHARSET=utf8mb4
@@ -110,7 +110,7 @@ database/002_tasks.sql  任务系统
 
 ```powershell
 $env:MYSQL_PWD = ((Get-Content 'C:\ProgramData\ApprenticeAttendance\secrets\mysql-root.txt' | Where-Object { $_ -like 'password=*' }) -split '=',2)[1]
-& 'C:\Program Files\MySQL\MySQL Server 8.4\bin\mysqldump.exe' --protocol=TCP -h 127.0.0.1 -P 3306 -u root --single-transaction --routines --triggers apprentice_attendance > 'C:\ProgramData\ApprenticeAttendance\backups\attendance_yyyyMMdd.sql'
+& 'C:\Program Files\MySQL\MySQL Server 8.4\bin\mysqldump.exe' --protocol=TCP -h 127.0.0.1 -P 3306 -u root --single-transaction --routines --triggers xueting > 'C:\ProgramData\ApprenticeAttendance\backups\attendance_yyyyMMdd.sql'
 Remove-Item Env:MYSQL_PWD
 ```
 

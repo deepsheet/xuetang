@@ -19,7 +19,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MYSQL_BIN="${MYSQL_BIN:-/opt/homebrew/opt/mysql@8.0/bin/mysql}"
 DB_HOST="${DB_HOST:-127.0.0.1}"
 DB_PORT="${DB_PORT:-3306}"
-TARGET_DB="${TARGET_DB:-uni}"
+TARGET_DB="${TARGET_DB:-xueting}"
 APP_USER="${APP_USER:-attendance_app}"
 MIGRATIONS=("001_init.sql" "002_tasks.sql")
 # 考勤系统的全部业务表（统一 xt_ 前缀，学堂拼音），表级授权的作用范围

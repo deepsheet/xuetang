@@ -1,14 +1,14 @@
 -- ============================================================
 -- 学徒考勤系统 · MySQL 8.4 初始表结构
--- 数据库：apprentice_attendance
+-- 数据库：xueting
 -- 说明：学号/工号由系统注册时分配，不使用班级/工种字段
 -- ============================================================
 
-CREATE DATABASE IF NOT EXISTS apprentice_attendance
+CREATE DATABASE IF NOT EXISTS xueting
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_0900_ai_ci;
 
-USE apprentice_attendance;
+USE xueting;
 
 CREATE TABLE IF NOT EXISTS xt_schema_migrations (
   version INT UNSIGNED NOT NULL,

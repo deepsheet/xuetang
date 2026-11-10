@@ -19,7 +19,7 @@
 双击：setup-database.bat
 
 按提示输入 MySQL 的 root 密码。脚本会：
-- 创建数据库 apprentice_attendance；
+- 创建数据库 xueting；
 - 创建网站专用账号 attendance_app；
 - 执行表结构迁移；
 - 写入 config\database.env。
@@ -49,7 +49,7 @@ http://localhost:8080/admin
 
 - 学徒端：签到、签退、查看在校时长、接收和完成任务。
 - 管理后台：账号管理、考勤记录、在校时长、任务管理、审计日志。
-- 数据备份：使用 mysqldump 备份 apprentice_attendance 数据库。
+- 数据备份：使用 mysqldump 备份 xueting 数据库。
 - 修改配置：config\database.env。
 
 四、注意事项

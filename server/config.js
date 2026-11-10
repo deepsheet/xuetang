@@ -40,7 +40,7 @@ const db = {
   port: Number(process.env.DB_PORT) || 3306,
   user: process.env.DB_USER || "attendance_app",
   password: process.env.DB_PASSWORD || "",
-  database: process.env.DB_NAME || "apprentice_attendance",
+  database: process.env.DB_NAME || "xueting",
   charset: process.env.DB_CHARSET || "utf8mb4",
   connectionLimit: Number(process.env.DB_POOL_SIZE) || 10
 };

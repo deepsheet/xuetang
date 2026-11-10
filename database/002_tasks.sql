@@ -2,7 +2,7 @@
 -- 学徒考勤系统 · 任务系统
 -- ============================================================
 
-USE apprentice_attendance;
+USE xueting;
 
 CREATE TABLE IF NOT EXISTS xt_tasks (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,

@@ -6,7 +6,7 @@
 
 $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent $MyInvocation.MyCommand.Path
-$Database = "apprentice_attendance"
+$Database = "xueting"
 $AppUser = "attendance_app"
 
 function Write-Step([string]$Text) {
@@ -83,13 +83,13 @@ $configFile = Join-Path $configDir "database.env"
 $sqlFile = Join-Path $env:TEMP ("attendance-setup-" + [guid]::NewGuid().ToString("N") + ".sql")
 
 $setupSql = @"
-CREATE DATABASE IF NOT EXISTS apprentice_attendance CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+CREATE DATABASE IF NOT EXISTS xueting CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 CREATE USER IF NOT EXISTS 'attendance_app'@'localhost' IDENTIFIED BY '$AppPassword';
 ALTER USER 'attendance_app'@'localhost' IDENTIFIED BY '$AppPassword';
 CREATE USER IF NOT EXISTS 'attendance_app'@'127.0.0.1' IDENTIFIED BY '$AppPassword';
 ALTER USER 'attendance_app'@'127.0.0.1' IDENTIFIED BY '$AppPassword';
-GRANT SELECT, INSERT, UPDATE, DELETE ON apprentice_attendance.* TO 'attendance_app'@'localhost';
-GRANT SELECT, INSERT, UPDATE, DELETE ON apprentice_attendance.* TO 'attendance_app'@'127.0.0.1';
+GRANT SELECT, INSERT, UPDATE, DELETE ON xueting.* TO 'attendance_app'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON xueting.* TO 'attendance_app'@'127.0.0.1';
 FLUSH PRIVILEGES;
 "@
 [System.IO.File]::WriteAllText($sqlFile, $setupSql, (New-Object System.Text.UTF8Encoding($false)))
@@ -109,7 +109,7 @@ try {
     if (-not (Test-Path $migrationFile)) {
       throw "缺少迁移文件：$migrationFile"
     }
-    $cmd = "`"$MysqlExe`" --protocol=TCP --host=127.0.0.1 --port=3306 --user=root --database=apprentice_attendance --default-character-set=utf8mb4 < `"$migrationFile`""
+    $cmd = "`"$MysqlExe`" --protocol=TCP --host=127.0.0.1 --port=3306 --user=root --database=xueting --default-character-set=utf8mb4 < `"$migrationFile`""
     & cmd.exe /c $cmd
     if ($LASTEXITCODE -ne 0) {
       throw "执行迁移失败：$migration"
@@ -120,7 +120,7 @@ try {
   $envText = @"
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_NAME=apprentice_attendance
+DB_NAME=xueting
 DB_USER=attendance_app
 DB_PASSWORD=$AppPassword
 DB_CHARSET=utf8mb4
@@ -129,7 +129,7 @@ DB_CHARSET=utf8mb4
 
   Write-Host ""
   Write-Host "数据库初始化完成。" -ForegroundColor Green
-  Write-Host "数据库：apprentice_attendance"
+  Write-Host "数据库：xueting"
   Write-Host "应用账号：attendance_app"
   Write-Host ("应用密码：" + $AppPassword) -ForegroundColor Yellow
   Write-Host ""

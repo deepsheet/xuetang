@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173f34">
+  <title>管理后台 · 学徒考勤</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/admin.css">
+</head>
+<body class="admin-body">
+  <svg class="icon-sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-logo" viewBox="0 0 24 24"><path d="M20 4C11.2 4 4.8 8.1 4.8 14.1A5.9 5.9 0 0 0 10.7 20C16.7 20 20 12.8 20 4Z"/><path d="M7.2 17.2c2.2-4.1 5.2-7.1 9.3-9.2"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19.5c.4-3.5 2.4-5.5 5.5-5.5s5.1 2 5.5 5.5"/><path d="M15.2 5.2a3 3 0 0 1 0 5.7M16.5 14.4c2.3.5 3.7 2.2 4 5.1"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+    <symbol id="i-tasks" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8 9 1.6 1.6L12 8M8 15h8"/></symbol>
+    <symbol id="i-audit" viewBox="0 0 24 24"><path d="M7 3h10a2 2 0 0 1 2 2v16l-5-3-5 3V5a2 2 0 0 1 2-2Z"/><path d="M9 8h6M9 12h4"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M10 4H5v16h5M14 8l4 4-4 4M8 12h10"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4.5 4.5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7.5 10.5 12 15l4.5-4.5M4 20h16"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-13.8-5.2L3 9"/><path d="M3 4v5h5"/><path d="M4 13a8 8 0 0 0 13.8 5.2L21 15"/><path d="M21 20v-5h-5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.3 4.3L19 7"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="3.5"/><path d="m10.5 12.5 8-8M15 8l2.5 2.5M17.5 5.5 20 8"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="7" y="5" width="3.5" height="14" rx="1"/><rect x="13.5" y="5" width="3.5" height="14" rx="1"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m7 4 12 8-12 8V4Z"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5 21 20H3L12 3.5Z"/><path d="M12 9v5M12 17.2v.1"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M7.5 3v4M16.5 3v4M3.5 9.5h17"/></symbol>
+  </svg>
+
+  <div class="admin-shell">
+    <aside class="admin-sidebar">
+      <a class="admin-brand" href="/admin">
+        <span class="admin-brand-mark"><svg class="icon"><use href="#i-logo"></use></svg></span>
+        <span><strong>学徒考勤</strong><small>ADMIN CONSOLE</small></span>
+      </a>
+
+      <nav class="admin-nav" aria-label="后台导航">
+        <button type="button" class="admin-nav-btn is-active" data-view="overview">
+          <svg class="icon"><use href="#i-grid"></use></svg><span>工作台</span>
+        </button>
+        <button type="button" class="admin-nav-btn" data-view="accounts">
+          <svg class="icon"><use href="#i-users"></use></svg><span>账号管理</span>
+        </button>
+        <button type="button" class="admin-nav-btn" data-view="attendance">
+          <svg class="icon"><use href="#i-clock"></use></svg><span>考勤记录</span>
+        </button>
+        <button type="button" class="admin-nav-btn" data-view="durations">
+          <svg class="icon"><use href="#i-chart"></use></svg><span>在校时长</span>
+        </button>
+        <button type="button" class="admin-nav-btn" data-view="tasks">
+          <svg class="icon"><use href="#i-tasks"></use></svg><span>任务管理</span>
+        </button>
+        <button type="button" class="admin-nav-btn" data-view="audit">
+          <svg class="icon"><use href="#i-audit"></use></svg><span>审计日志</span>
+        </button>
+      </nav>
+
+      <div class="admin-sidebar-foot">
+        <div class="admin-user">
+          <span class="admin-avatar" id="adminAvatar">管</span>
+          <div><strong id="adminName">管理员</strong><span id="adminNumber">T2026-0001</span></div>
+        </div>
+        <button class="admin-side-link" type="button" id="logoutBtn">
+          <svg class="icon"><use href="#i-logout"></use></svg>
+          退出登录
+        </button>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <header class="admin-topbar">
+        <div>
+          <span class="admin-kicker">ADMIN CONSOLE</span>
+          <h1 id="viewTitle">工作台</h1>
+        </div>
+        <div class="admin-top-actions">
+          <span class="admin-today" id="adminToday">—</span>
+          <button class="btn btn-primary btn-sm" type="button" id="topCreateTaskBtn" aria-label="发布任务">
+            <svg class="icon"><use href="#i-plus"></use></svg>
+            <span>发布任务</span>
+          </button>
+          <button class="btn btn-quiet btn-sm" type="button" id="topRefreshBtn" aria-label="刷新当前页面">
+            <svg class="icon"><use href="#i-refresh"></use></svg>
+          </button>
+          <button class="icon-btn" type="button" id="topChangePasswordBtn" aria-label="修改密码" title="修改密码">
+            <svg class="icon"><use href="#i-key"></use></svg>
+          </button>
+          <button class="icon-btn" type="button" id="topLogoutBtn" aria-label="退出登录" title="退出登录">
+            <svg class="icon"><use href="#i-logout"></use></svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="admin-content">
+        <div class="admin-error" id="adminError" role="alert" hidden></div>
+
+        <section class="admin-view" data-view-panel="overview">
+          <div class="admin-stat-grid">
+            <article class="admin-stat admin-stat-strong">
+              <div class="admin-stat-head"><span>学徒总数</span><svg class="icon"><use href="#i-users"></use></svg></div>
+              <strong id="statTotal">0</strong>
+              <small>在册有效学徒</small>
+            </article>
+            <article class="admin-stat">
+              <div class="admin-stat-head"><span>当前在校</span><svg class="icon"><use href="#i-clock"></use></svg></div>
+              <strong id="statActive">0</strong>
+              <small>已签到未签退</small>
+            </article>
+            <article class="admin-stat">
+              <div class="admin-stat-head"><span>今日签到</span><svg class="icon"><use href="#i-calendar"></use></svg></div>
+              <strong id="statTodayIn">0</strong>
+              <small>人次</small>
+            </article>
+            <article class="admin-stat">
+              <div class="admin-stat-head"><span>今日签退</span><svg class="icon"><use href="#i-logout"></use></svg></div>
+              <strong id="statTodayOut">0</strong>
+              <small>人次</small>
+            </article>
+            <article class="admin-stat">
+              <div class="admin-stat-head"><span>今日在校时长</span><svg class="icon"><use href="#i-chart"></use></svg></div>
+              <strong id="statTodayHours">0</strong>
+              <small>小时</small>
+            </article>
+            <article class="admin-stat admin-stat-warm">
+              <div class="admin-stat-head"><span>待办任务</span><svg class="icon"><use href="#i-tasks"></use></svg></div>
+              <strong id="statPendingTasks">0</strong>
+              <small id="statOverdueTasks">0 个已逾期</small>
+            </article>
+          </div>
+
+          <div class="admin-two-col">
+            <section class="admin-card">
+              <div class="admin-card-head">
+                <div><span class="admin-kicker">LAST 7 DAYS</span><h2>近 7 日到校</h2></div>
+                <span class="admin-card-note" id="chartTotal">—</span>
+              </div>
+              <div class="daily-chart" id="dailyChart"></div>
+            </section>
+
+            <section class="admin-card">
+              <div class="admin-card-head">
+                <div><span class="admin-kicker">TO DO</span><h2>待办任务</h2></div>
+                <button class="text-button" type="button" data-goto="tasks">全部任务 <svg class="icon"><use href="#i-arrow-right"></use></svg></button>
+              </div>
+              <div class="overview-task-list" id="overviewTasks"></div>
+            </section>
+          </div>
+
+          <section class="admin-card">
+            <div class="admin-card-head">
+              <div><span class="admin-kicker">RECENT ATTENDANCE</span><h2>最近考勤</h2></div>
+              <button class="text-button" type="button" data-goto="attendance">查看全部 <svg class="icon"><use href="#i-arrow-right"></use></svg></button>
+            </div>
+            <div class="table-scroll">
+              <table class="data-table admin-table">
+                <thead><tr><th>学徒</th><th>签到</th><th>签退</th><th>在校时长</th><th>状态</th></tr></thead>
+                <tbody id="recentAttendanceBody"></tbody>
+              </table>
+            </div>
+            <div class="admin-empty" id="recentEmpty" hidden>暂无考勤记录</div>
+          </section>
+        </section>
+
+        <section class="admin-view" data-view-panel="accounts" hidden>
+          <div class="admin-view-head">
+            <div><span class="admin-kicker">ACCOUNTS</span><h2>账号管理</h2><p>注册学徒或管理员账号，系统自动分配学号/工号。</p></div>
+            <button class="btn btn-primary btn-sm" type="button" id="createAccountBtn"><svg class="icon"><use href="#i-plus"></use></svg>注册账号</button>
+          </div>
+          <div class="admin-card">
+            <div class="admin-toolbar">
+              <label class="admin-search"><svg class="icon"><use href="#i-search"></use></svg><input id="accountSearch" type="search" placeholder="搜索姓名或学号/工号"></label>
+              <div class="segmented" id="accountRoleFilter">
+                <button type="button" class="is-active" data-role="all">全部</button>
+                <button type="button" data-role="apprentice">学徒</button>
+                <button type="button" data-role="admin">管理员</button>
+              </div>
+              <button class="btn btn-quiet btn-sm" type="button" id="refreshAccounts"><svg class="icon"><use href="#i-refresh"></use></svg></button>
+            </div>
+            <div class="table-scroll">
+              <table class="data-table admin-table">
+                <thead><tr><th>学号 / 工号</th><th>姓名</th><th>角色</th><th>状态</th><th>最近登录</th><th class="align-right">操作</th></tr></thead>
+                <tbody id="accountsBody"></tbody>
+              </table>
+            </div>
+            <div class="admin-empty" id="accountsEmpty" hidden>没有找到账号</div>
+          </div>
+        </section>
+
+        <section class="admin-view" data-view-panel="attendance" hidden>
+          <div class="admin-view-head">
+            <div><span class="admin-kicker">ATTENDANCE</span><h2>考勤记录</h2><p>查看全部签到、签退和作废记录。</p></div>
+            <button class="btn btn-outline btn-sm" type="button" id="exportAttendance"><svg class="icon"><use href="#i-download"></use></svg>导出 CSV</button>
+          </div>
+          <div class="admin-card">
+            <div class="admin-toolbar admin-toolbar-wrap">
+              <label class="admin-date"><span>从</span><input id="attendanceFrom" type="date"></label>
+              <label class="admin-date"><span>至</span><input id="attendanceTo" type="date"></label>
+              <select class="admin-select" id="attendanceStatus">
+                <option value="all">全部状态</option>
+                <option value="active">在校中</option>
+                <option value="completed">已签退</option>
+                <option value="voided">已作废</option>
+              </select>
+              <label class="admin-search"><svg class="icon"><use href="#i-search"></use></svg><input id="attendanceSearch" type="search" placeholder="姓名 / 编号 / 地点"></label>
+              <button class="btn btn-quiet btn-sm" type="button" id="refreshAttendance"><svg class="icon"><use href="#i-refresh"></use></svg></button>
+            </div>
+            <div class="table-scroll">
+              <table class="data-table admin-table">
+                <thead><tr><th>学徒</th><th>签到</th><th>签退</th><th>在校时长</th><th>签到位置</th><th>状态</th><th class="align-right">操作</th></tr></thead>
+                <tbody id="attendanceBody"></tbody>
+              </table>
+            </div>
+            <div class="admin-empty" id="attendanceEmpty" hidden>该时间范围内没有记录</div>
+          </div>
+        </section>
+
+        <section class="admin-view" data-view-panel="durations" hidden>
+          <div class="admin-view-head">
+            <div><span class="admin-kicker">TIME ON CAMPUS</span><h2>在校时长</h2><p>按学徒汇总在训次数、累计在校时长和最近到校时间。</p></div>
+          </div>
+          <div class="admin-card">
+            <div class="admin-toolbar admin-toolbar-wrap">
+              <label class="admin-date"><span>从</span><input id="durationFrom" type="date"></label>
+              <label class="admin-date"><span>至</span><input id="durationTo" type="date"></label>
+              <button class="btn btn-primary btn-sm" type="button" id="refreshDurations">查询</button>
+              <div class="admin-summary-chips">
+                <span>累计 <strong id="durationTotal">0 小时</strong></span>
+                <span>在训 <strong id="durationSessions">0 次</strong></span>
+              </div>
+            </div>
+            <div class="table-scroll">
+              <table class="data-table admin-table">
+                <thead><tr><th>学徒</th><th>学号</th><th>在训次数</th><th>累计在校时长</th><th>最近到校</th></tr></thead>
+                <tbody id="durationsBody"></tbody>
+              </table>
+            </div>
+            <div class="admin-empty" id="durationsEmpty" hidden>暂无在校时长数据</div>
+          </div>
+        </section>
+
+        <section class="admin-view" data-view-panel="tasks" hidden>
+          <div class="admin-view-head">
+            <div><span class="admin-kicker">TASKS</span><h2>任务管理</h2><p>给学徒发布任务，跟进开始与完成状态。</p></div>
+            <button class="btn btn-primary btn-sm" type="button" id="createTaskBtn"><svg class="icon"><use href="#i-plus"></use></svg>发布任务</button>
+          </div>
+          <div class="admin-card">
+            <div class="admin-toolbar">
+              <label class="admin-search"><svg class="icon"><use href="#i-search"></use></svg><input id="taskSearch" type="search" placeholder="搜索任务或学徒"></label>
+              <select class="admin-select" id="taskStatusFilter">
+                <option value="all">全部状态</option>
+                <option value="pending">待开始</option>
+                <option value="in_progress">进行中</option>
+                <option value="completed">已完成</option>
+                <option value="cancelled">已取消</option>
+              </select>
+              <button class="btn btn-quiet btn-sm" type="button" id="refreshTasks"><svg class="icon"><use href="#i-refresh"></use></svg></button>
+            </div>
+            <div class="table-scroll">
+              <table class="data-table admin-table">
+                <thead><tr><th>任务</th><th>学徒</th><th>优先级</th><th>截止时间</th><th>状态</th><th>创建人</th><th class="align-right">操作</th></tr></thead>
+                <tbody id="tasksBody"></tbody>
+              </table>
+            </div>
+            <div class="admin-empty" id="tasksEmpty" hidden>还没有任务</div>
+          </div>
+        </section>
+
+        <section class="admin-view" data-view-panel="audit" hidden>
+          <div class="admin-view-head">
+            <div><span class="admin-kicker">AUDIT LOG</span><h2>审计日志</h2><p>记录账号、考勤和任务的关键操作。</p></div>
+          </div>
+          <div class="admin-card">
+            <div class="table-scroll">
+              <table class="data-table admin-table">
+                <thead><tr><th>时间</th><th>操作人</th><th>动作</th><th>对象</th><th>详情</th><th>IP</th></tr></thead>
+                <tbody id="auditBody"></tbody>
+              </table>
+            </div>
+            <div class="admin-empty" id="auditEmpty" hidden>暂无审计记录</div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal" id="accountModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="accountModal"></div>
+    <div class="modal-panel modal-panel-narrow" role="dialog" aria-modal="true" aria-labelledby="accountModalTitle">
+      <div class="modal-head">
+        <div><span class="card-kicker">NEW ACCOUNT</span><h2 id="accountModalTitle">注册账号</h2><p>系统会自动分配学号或工号</p></div>
+        <button class="icon-btn modal-close" type="button" data-close="accountModal" aria-label="关闭"><svg class="icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <form class="modal-body" id="accountForm" novalidate>
+        <label class="field"><span class="field-label">姓名 <b>*</b></span><input id="accountName" type="text" maxlength="50" placeholder="请输入学徒或管理员姓名" required></label>
+        <label class="field"><span class="field-label">账号类型</span>
+          <select id="accountRole" class="admin-select admin-select-block">
+            <option value="apprentice">学徒 · 分配学号</option>
+            <option value="admin">管理员 · 分配工号</option>
+          </select>
+        </label>
+        <label class="field"><span class="field-label">初始密码 <span class="optional">留空自动生成</span></span><input id="accountPassword" type="text" maxlength="128" placeholder="至少 8 位，包含字母和数字"></label>
+        <p class="form-note">首次登录时，对方需要修改初始密码。</p>
+        <div class="modal-actions">
+          <span class="submit-hint" id="accountHint">注册后会显示账号和初始密码</span>
+          <div class="action-buttons">
+            <button class="btn btn-quiet" type="button" data-close="accountModal">取消</button>
+            <button class="btn btn-primary" type="submit" id="accountSubmit">确认注册</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="taskModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="taskModal"></div>
+    <div class="modal-panel modal-panel-narrow" role="dialog" aria-modal="true" aria-labelledby="taskModalTitle">
+      <div class="modal-head">
+        <div><span class="card-kicker">NEW TASK</span><h2 id="taskModalTitle">发布任务</h2><p>分配给一名学徒并设置截止时间</p></div>
+        <button class="icon-btn modal-close" type="button" data-close="taskModal" aria-label="关闭"><svg class="icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <form class="modal-body" id="taskForm" novalidate>
+        <label class="field"><span class="field-label">任务标题 <b>*</b></span><input id="taskTitle" type="text" maxlength="120" placeholder="例如 完成木工榫卯练习" required></label>
+        <label class="field"><span class="field-label">任务说明</span><textarea id="taskDescription" class="admin-textarea" maxlength="2000" rows="3" placeholder="补充任务要求、交付标准等"></textarea></label>
+        <div class="form-row">
+          <label class="field"><span class="field-label">分配给 <b>*</b></span><select id="taskAssignee" class="admin-select admin-select-block" required></select></label>
+          <label class="field"><span class="field-label">优先级</span>
+            <select id="taskPriority" class="admin-select admin-select-block">
+              <option value="normal">普通</option>
+              <option value="high">优先</option>
+              <option value="low">较低</option>
+            </select>
+          </label>
+        </div>
+        <label class="field"><span class="field-label">截止时间 <span class="optional">选填</span></span><input id="taskDueAt" type="datetime-local"></label>
+        <div class="modal-actions">
+          <span class="submit-hint" id="taskHint">任务会立即出现在学徒端</span>
+          <div class="action-buttons">
+            <button class="btn btn-quiet" type="button" data-close="taskModal">取消</button>
+            <button class="btn btn-primary" type="submit" id="taskSubmit">发布任务</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="resultModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="resultModal"></div>
+    <div class="modal-panel modal-panel-narrow" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+      <div class="modal-head">
+        <div><span class="card-kicker">ACCOUNT CREATED</span><h2 id="resultTitle">账号信息</h2><p>请把以下信息交给对应人员</p></div>
+        <button class="icon-btn modal-close" type="button" data-close="resultModal" aria-label="关闭"><svg class="icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <div class="modal-body">
+        <div class="result-box" id="resultBox"></div>
+        <p class="form-note">初始密码只会显示这一次，关闭窗口后不再展示。</p>
+        <div class="modal-actions">
+          <span class="submit-hint">对方首次登录时必须修改密码</span>
+          <div class="action-buttons">
+            <button class="btn btn-quiet" type="button" id="copyResultBtn">复制信息</button>
+            <button class="btn btn-primary" type="button" data-close="resultModal">完成</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="adminPasswordModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="adminPasswordModal"></div>
+    <div class="modal-panel modal-panel-narrow" role="dialog" aria-modal="true" aria-labelledby="adminPasswordTitle">
+      <div class="modal-head">
+        <div><span class="card-kicker">SECURITY</span><h2 id="adminPasswordTitle">修改密码</h2><p>修改成功后会退出其他设备的登录</p></div>
+        <button class="icon-btn modal-close" type="button" data-close="adminPasswordModal" aria-label="关闭"><svg class="icon"><use href="#i-x"></use></svg></button>
+      </div>
+      <form class="modal-body" id="adminPasswordForm" novalidate>
+        <label class="field"><span class="field-label">当前密码</span><input id="adminCurrentPassword" type="password" autocomplete="current-password" required></label>
+        <label class="field"><span class="field-label">新密码</span><input id="adminNewPassword" type="password" autocomplete="new-password" placeholder="至少 8 位，包含字母和数字" required></label>
+        <label class="field"><span class="field-label">确认新密码</span><input id="adminConfirmPassword" type="password" autocomplete="new-password" required></label>
+        <p class="form-note"><svg class="icon"><use href="#i-shield"></use></svg>建议使用不易猜测的字母、数字组合。</p>
+        <div class="modal-actions"><span class="submit-hint" id="adminPasswordHint">修改后请使用新密码登录</span><div class="action-buttons"><button class="btn btn-quiet" type="button" data-close="adminPasswordModal">取消</button><button class="btn btn-primary" type="submit" id="adminPasswordSubmit">保存新密码</button></div></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container" id="adminToast" aria-live="polite"></div>
+  <script src="/admin.js" defer></script>
+</body>
+</html>

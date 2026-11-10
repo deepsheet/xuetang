@@ -1,0 +1,39 @@
+# ============================================================
+# 跨平台换行符约定（Mac 开发者 + Windows 开发者协作）
+# 仓库内统一存 LF，检出时按文件类型自动转换。
+# 目的：避免 Windows 把 .sh 改成 CRLF 后 Mac 上出现
+#       "bad interpreter: /bin/bash^M" 这类报错。
+# ============================================================
+
+# 默认：由 Git 自动判定文本/二进制，文本统一 LF 入库
+* text=auto eol=lf
+
+# 源码与配置（两端都应保持 LF）
+*.js      text eol=lf
+*.json    text eol=lf
+*.md      text eol=lf
+*.css     text eol=lf
+*.html    text eol=lf
+*.svg     text eol=lf
+*.sql     text eol=lf
+*.sh      text eol=lf
+*.yml     text eol=lf
+*.yaml    text eol=lf
+*.env     text eol=lf
+
+# Windows 专有文件：检出时必须 CRLF，否则 cmd.exe / PowerShell 解析异常
+*.bat     text eol=crlf
+*.cmd     text eol=crlf
+*.ps1     text eol=crlf
+
+# 面向 Windows 用户的说明文档，用 CRLF 以兼容记事本
+*.txt     text eol=crlf
+
+# 二进制资源，不做任何换行转换
+*.png     binary
+*.jpg     binary
+*.jpeg    binary
+*.gif     binary
+*.ico     binary
+*.woff    binary
+*.woff2   binary

@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1e6b52">
+  <meta name="description" content="学徒到校签到、离校签退、在校时长与任务管理。">
+  <title>学徒考勤 · 我的工作台</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/dashboard.css">
+</head>
+<body>
+  <svg class="icon-sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-logo" viewBox="0 0 24 24"><path d="M20 4C11.2 4 4.8 8.1 4.8 14.1A5.9 5.9 0 0 0 10.7 20C16.7 20 20 12.8 20 4Z"/><path d="M7.2 17.2c2.2-4.1 5.2-7.1 9.3-9.2"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-5.9 7-12a7 7 0 1 0-14 0c0 6.1 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+    <symbol id="i-locate" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="1.5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M7.5 3v4M16.5 3v4M3.5 9.5h17"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.3 4.3L19 7"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12.2 2.7 2.7 5.5-6"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7.5 10.5 12 15l4.5-4.5M4 20h16"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4.5 4.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-13.8-5.2L3 9"/><path d="M3 4v5h5"/><path d="M4 13a8 8 0 0 0 13.8 5.2L21 15"/><path d="M21 20v-5h-5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5.3c0 4.5 2.8 7.7 7 9.7 4.2-2 7-5.2 7-9.7V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-table" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M9.5 9.5v10"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5 21 20H3L12 3.5Z"/><path d="M12 9v5M12 17.2v.1"/></symbol>
+    <symbol id="i-walk" viewBox="0 0 24 24"><circle cx="13" cy="4.5" r="2"/><path d="m11 8-2 5 3 2 1.5 6M9 13l-3 3M12 15l4 2 1 4"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2.5"/><path d="M8.5 10V7.5a3.5 3.5 0 0 1 7 0V10M12 14v2"/></symbol>
+    <symbol id="i-task" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8 9 1.6 1.6L12 8M8 15h8"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M10 4H5v16h5M14 8l4 4-4 4M8 12h10"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="3.5"/><path d="m10.5 12.5 8-8M15 8l2.5 2.5M17.5 5.5 20 8"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 10.5V17M12 7v.1"/></symbol>
+  </svg>
+
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="学徒考勤首页">
+        <span class="brand-mark"><svg class="icon"><use href="#i-logo"></use></svg></span>
+        <span class="brand-copy"><strong>学徒考勤</strong><small>APPRENTICE ATTENDANCE</small></span>
+      </a>
+
+      <nav class="site-nav" aria-label="主导航">
+        <a href="#today" class="nav-link is-active">今日考勤</a>
+        <a href="#records" class="nav-link">我的记录</a>
+        <a href="#tasks" class="nav-link">我的任务</a>
+      </nav>
+
+      <div class="header-tools">
+        <div class="header-clock"><span id="headerClock">--:--:--</span><small>本地时间</small></div>
+        <div class="user-chip">
+          <span class="avatar user-avatar" id="headerAvatar">学</span>
+          <div class="user-chip-copy"><strong id="headerName">正在加载</strong><span id="headerNumber">—</span></div>
+        </div>
+        <button class="icon-btn header-icon-btn" type="button" id="changePasswordBtn" aria-label="修改密码" title="修改密码"><svg class="icon"><use href="#i-key"></use></svg></button>
+        <button class="icon-btn header-icon-btn" type="button" id="logoutBtn" aria-label="退出登录" title="退出登录"><svg class="icon"><use href="#i-logout"></use></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="today">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <div class="eyebrow hero-eyebrow">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span>今日考勤</span>
+            <span class="eyebrow-line" aria-hidden="true"></span>
+            <span id="heroDate">正在加载日期</span>
+          </div>
+
+          <h1>你好，<span id="heroName">学徒</span>。<br><span class="headline-accent">今天也要好好精进。</span></h1>
+          <p class="hero-lead">到校时签到，离校时签退。系统会自动记录你的在校时长与当前位置，让每一段成长都有迹可循。</p>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-lg" type="button" id="checkinBtn"><span class="btn-icon-wrap"><svg class="icon"><use href="#i-check"></use></svg></span>学徒签到</button>
+            <button class="btn btn-outline btn-lg" type="button" id="checkoutBtn"><svg class="icon"><use href="#i-walk"></use></svg>办理签退</button>
+          </div>
+
+          <div class="hero-presence">
+            <div class="avatar-stack"><span class="avatar avatar-tone-0" id="heroAvatar">学</span></div>
+            <div class="presence-copy"><strong id="heroStatus">正在获取今日状态</strong><span id="heroHint">—</span></div>
+          </div>
+
+          <p class="hero-note"><svg class="icon"><use href="#i-shield"></use></svg>位置仅用于本次签到留痕，不会在后台持续追踪</p>
+        </div>
+
+        <aside class="location-card" aria-labelledby="locationCardTitle">
+          <div class="location-card-head">
+            <div><span class="card-kicker">LIVE LOCATION</span><h2 id="locationCardTitle">现场定位</h2></div>
+            <button class="icon-btn icon-btn-locate" id="locateBtn" type="button" title="获取当前位置" aria-label="获取当前位置"><svg class="icon"><use href="#i-locate"></use></svg></button>
+          </div>
+          <div class="hero-map-wrap">
+            <div class="map" id="heroMap" aria-label="当前位置地图"></div>
+            <div class="map-badge" id="mapBadge"><span class="status-dot is-idle" id="mapStatusDot" aria-hidden="true"></span><span id="mapBadgeText">等待定位</span></div>
+          </div>
+          <div class="location-detail">
+            <span class="pin-bubble"><svg class="icon"><use href="#i-pin"></use></svg></span>
+            <div class="location-text"><strong id="heroAddress">尚未获取当前位置</strong><span id="heroCoords">点击右上角定位按钮开始</span></div>
+          </div>
+          <div class="location-foot"><span id="heroAccuracy">定位精度 —</span><button class="text-button" id="locateTextBtn" type="button">获取位置 <svg class="icon"><use href="#i-arrow-right"></use></svg></button></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="stats-grid" aria-label="我的考勤统计">
+      <article class="stat-card stat-featured">
+        <div class="stat-head"><span class="stat-icon"><svg class="icon"><use href="#i-check-circle"></use></svg></span><span class="stat-label">今日签到</span></div>
+        <div class="stat-value"><span id="statCheckins">0</span><small>人次</small></div>
+        <div class="stat-foot"><span id="statCheckinsFoot">今天还未签到</span><div class="stat-spark" id="statSpark" aria-hidden="true"></div></div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-head"><span class="stat-icon tone-blue"><svg class="icon"><use href="#i-logout"></use></svg></span><span class="stat-label">今日签退</span></div>
+        <div class="stat-value"><span id="statCheckouts">0</span><small>人次</small></div>
+        <div class="stat-foot"><span id="statCheckoutsFoot">—</span></div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-head"><span class="stat-icon tone-amber"><svg class="icon"><use href="#i-clock"></use></svg></span><span class="stat-label">今日在校</span></div>
+        <div class="stat-value"><span id="statTodayDuration">0</span><small id="statTodayUnit">小时</small></div>
+        <div class="stat-foot"><span id="statTodayFoot">签到后开始累计</span></div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-head"><span class="stat-icon tone-clay"><svg class="icon"><use href="#i-calendar"></use></svg></span><span class="stat-label">本周在校</span></div>
+        <div class="stat-value"><span id="statWeekDuration">0</span><small id="statWeekUnit">小时</small></div>
+        <div class="stat-foot"><span id="statWeekFoot">近 7 天累计</span></div>
+      </article>
+    </section>
+
+    <section class="records-section" id="records">
+      <div class="section-heading">
+        <div><span class="card-kicker">MY ATTENDANCE</span><h2>我的考勤</h2><p>签到、签退和在校时长都会完整保留。</p></div>
+        <button class="btn btn-outline btn-sm section-export" type="button" id="exportBtn"><svg class="icon"><use href="#i-download"></use></svg>导出记录</button>
+      </div>
+
+      <div class="table-card">
+        <div class="toolbar">
+          <label class="search-box"><svg class="icon"><use href="#i-search"></use></svg><input id="searchInput" type="search" placeholder="搜索签到地点" autocomplete="off" aria-label="搜索考勤记录"><span class="search-shortcut" aria-hidden="true">/</span></label>
+          <div class="filter-cluster"><span class="filter-label">状态</span><div class="segmented" id="statusFilter" role="group" aria-label="按状态筛选"><button type="button" class="is-active" data-status="all" aria-pressed="true">全部</button><button type="button" data-status="active" aria-pressed="false">在校中</button><button type="button" data-status="completed" aria-pressed="false">已签退</button></div></div>
+          <div class="filter-cluster"><span class="filter-label">时间</span><div class="segmented" id="rangeFilter" role="group" aria-label="按时间筛选"><button type="button" class="is-active" data-range="today" aria-pressed="true">今天</button><button type="button" data-range="week" aria-pressed="false">近 7 天</button><button type="button" data-range="month" aria-pressed="false">近 30 天</button><button type="button" data-range="all" aria-pressed="false">全部</button></div></div>
+        </div>
+
+        <div class="table-summary">
+          <span>当前显示 <strong id="recordCount">0</strong> 条记录</span><span class="summary-dot" aria-hidden="true"></span><span id="filterSummary">今天 · 全部状态</span>
+          <span class="storage-note"><svg class="icon"><use href="#i-lock"></use></svg>数据保存在 MySQL</span>
+          <span class="swipe-hint"><svg class="icon"><use href="#i-arrow-right"></use></svg>左右滑动查看完整表格</span>
+        </div>
+
+        <div class="table-scroll" id="tableScroll" tabindex="0" role="region" aria-label="考勤明细表格，可左右滚动">
+          <table class="data-table my-record-table">
+            <thead><tr><th scope="col">签到时间</th><th scope="col">签退时间</th><th scope="col">在校时长</th><th scope="col">签到位置</th><th scope="col">状态</th><th scope="col" class="align-right">操作</th></tr></thead>
+            <tbody id="recordsBody"></tbody>
+          </table>
+        </div>
+
+        <div class="empty-state" id="emptyState" hidden>
+          <div class="empty-illustration" aria-hidden="true"><span class="empty-ring"></span><svg class="icon"><use href="#i-table"></use></svg></div>
+          <h3 id="emptyTitle">还没有考勤记录</h3><p id="emptyText">到校后点击「学徒签到」，第一条记录就会出现在这里。</p>
+          <div class="empty-actions"><button class="btn btn-primary btn-sm" type="button" id="emptyCheckinBtn"><svg class="icon"><use href="#i-plus"></use></svg>去签到</button></div>
+        </div>
+
+        <div class="table-foot"><span>显示 <strong id="shownCount">0</strong> / <strong id="totalCount">0</strong> 条</span><span class="foot-note">账号数据与管理员后台实时同步</span></div>
+      </div>
+    </section>
+
+    <section class="tasks-section" id="tasks">
+      <div class="section-heading">
+        <div><span class="card-kicker">MY TASKS</span><h2>我的任务</h2><p>管理员发布的学习任务会出现在这里，完成后会同步到后台。</p></div>
+        <div class="segmented" id="taskFilter" role="group" aria-label="任务筛选"><button type="button" class="is-active" data-task-status="all" aria-pressed="true">全部</button><button type="button" data-task-status="pending" aria-pressed="false">待开始</button><button type="button" data-task-status="in_progress" aria-pressed="false">进行中</button><button type="button" data-task-status="completed" aria-pressed="false">已完成</button></div>
+      </div>
+      <div class="task-grid" id="tasksList"></div>
+      <div class="task-empty" id="tasksEmpty" hidden><span class="task-empty-icon"><svg class="icon"><use href="#i-task"></use></svg></span><h3>暂无任务</h3><p>管理员发布任务后，你会在这里看到。</p></div>
+    </section>
+
+    <section class="guide-section" id="guide">
+      <div class="guide-intro"><span class="card-kicker">HOW IT WORKS</span><h2>三步完成一次考勤</h2><p>不改变原有流程，只为每一次到场留下一份清晰记录。</p></div>
+      <div class="guide-grid">
+        <article class="guide-card"><span class="guide-number">01</span><span class="guide-icon"><svg class="icon"><use href="#i-check"></use></svg></span><h3>到校签到</h3><p>点击「学徒签到」，确认当前位置后提交。系统自动记录到校时间与定位精度。</p></article>
+        <article class="guide-card"><span class="guide-number">02</span><span class="guide-icon"><svg class="icon"><use href="#i-walk"></use></svg></span><h3>离校签退</h3><p>离校时点击「办理签退」，系统自动计算本次在校时长，并记录离校位置。</p></article>
+        <article class="guide-card"><span class="guide-number">03</span><span class="guide-icon"><svg class="icon"><use href="#i-task"></use></svg></span><h3>完成任务</h3><p>在「我的任务」中开始和完成任务，状态会实时同步到管理员后台。</p></article>
+      </div>
+      <div class="guide-note"><span class="guide-note-icon"><svg class="icon"><use href="#i-info"></use></svg></span><p><strong>关于定位：</strong>浏览器会询问位置权限，请选择「允许」。地图底图来自 OpenStreetMap / Esri，地址由 BigDataCloud 解析；离线时仍可签到，但地图与地址可能不可用。</p></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><span class="brand-mark brand-mark-sm"><svg class="icon"><use href="#i-logo"></use></svg></span><span><strong>学徒考勤</strong><small>让成长，有迹可循。</small></span></div><p>账号数据与考勤记录存储于本机 MySQL · 请妥善保管登录密码</p><span class="footer-year" id="footerYear">2026</span></div></footer>
+
+  <div class="modal" id="checkinModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="checkinModal"></div>
+    <div class="modal-panel modal-panel-wide" role="dialog" aria-modal="true" aria-labelledby="checkinTitle">
+      <div class="modal-head"><div><span class="card-kicker">CHECK IN</span><h2 id="checkinTitle">学徒签到</h2><p>确认到校时间与当前位置</p></div><button class="icon-btn modal-close" type="button" data-close="checkinModal" aria-label="关闭签到窗口"><svg class="icon"><use href="#i-x"></use></svg></button></div>
+      <form class="modal-body" id="checkinForm" novalidate>
+        <div class="signed-in-card"><span class="person-avatar avatar-tone-0" id="checkinAvatar">学</span><div><strong id="checkinName">—</strong><span id="checkinNumber">—</span></div><span class="signed-in-tag"><svg class="icon"><use href="#i-shield"></use></svg>当前登录账号</span></div>
+        <div class="map-field">
+          <div class="map-field-head"><div><strong>签到位置</strong><span id="checkinLocStatus">正在获取当前位置…</span></div><button class="text-button" type="button" id="refreshCheckinLoc"><svg class="icon"><use href="#i-refresh"></use></svg>重新定位</button></div>
+          <div class="map map-modal" id="checkinMap" aria-label="签到位置地图"></div>
+          <div class="address-row"><span class="pin-bubble pin-bubble-sm"><svg class="icon"><use href="#i-pin"></use></svg></span><div><strong id="checkinAddress">等待获取位置</strong><span id="checkinCoords">坐标将随签到一并保存</span></div><span class="accuracy-pill" id="checkinAccuracy">—</span></div>
+        </div>
+        <p class="form-note"><svg class="icon"><use href="#i-clock"></use></svg>签到时间以服务器当前时间为准，位置仅用于考勤留痕。</p>
+        <div class="modal-actions"><span class="submit-hint" id="checkinHint">正在准备定位，请稍候</span><div class="action-buttons"><button class="btn btn-quiet" type="button" data-close="checkinModal">取消</button><button class="btn btn-primary" type="submit" id="checkinSubmit" disabled><svg class="icon"><use href="#i-check"></use></svg>确认签到</button></div></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="checkoutModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="checkoutModal"></div>
+    <div class="modal-panel modal-panel-wide" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+      <div class="modal-head"><div><span class="card-kicker">CHECK OUT</span><h2 id="checkoutTitle">办理签退</h2><p>确认离校时间，完成本次在校记录</p></div><button class="icon-btn modal-close" type="button" data-close="checkoutModal" aria-label="关闭签退窗口"><svg class="icon"><use href="#i-x"></use></svg></button></div>
+      <form class="modal-body" id="checkoutForm" novalidate>
+        <div class="checkout-summary" id="checkoutSummary"></div>
+        <div class="map-field">
+          <div class="map-field-head"><div><strong>签退位置</strong><span id="checkoutLocStatus">正在获取当前位置…</span></div><button class="text-button" type="button" id="refreshCheckoutLoc"><svg class="icon"><use href="#i-refresh"></use></svg>重新定位</button></div>
+          <div class="map map-modal" id="checkoutMap" aria-label="签退位置地图"></div>
+          <div class="address-row"><span class="pin-bubble pin-bubble-sm"><svg class="icon"><use href="#i-pin"></use></svg></span><div><strong id="checkoutAddress">等待获取位置</strong><span id="checkoutCoords">坐标将随签退一并保存</span></div><span class="accuracy-pill" id="checkoutAccuracy">—</span></div>
+        </div>
+        <p class="form-note"><svg class="icon"><use href="#i-clock"></use></svg>系统将以服务器当前时间签退。即使定位失败，也可以正常签退。</p>
+        <div class="modal-actions"><span class="submit-hint" id="checkoutHint">正在准备定位，请稍候</span><div class="action-buttons"><button class="btn btn-quiet" type="button" data-close="checkoutModal">取消</button><button class="btn btn-primary" type="submit" id="checkoutSubmit" disabled>确认签退</button></div></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="locationModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="locationModal"></div>
+    <div class="modal-panel modal-panel-wide" role="dialog" aria-modal="true" aria-labelledby="locationTitle">
+      <div class="modal-head"><div><span class="card-kicker">LOCATION RECORD</span><h2 id="locationTitle">位置详情</h2><p id="locationSubtitle">考勤位置留痕</p></div><button class="icon-btn modal-close" type="button" data-close="locationModal" aria-label="关闭位置窗口"><svg class="icon"><use href="#i-x"></use></svg></button></div>
+      <div class="modal-body">
+        <div class="location-tabs" id="locationTabs" role="group" aria-label="切换签到与签退位置" hidden></div>
+        <div class="map map-location" id="locationMap" aria-label="考勤位置地图"></div>
+        <div class="location-record"><div class="location-record-main"><span class="pin-bubble"><svg class="icon"><use href="#i-pin"></use></svg></span><div><strong id="locationAddress">—</strong><span id="locationCoords">—</span></div></div><div class="location-record-grid"><div><span>记录类型</span><strong id="locationType">签到</strong></div><div><span>记录时间</span><strong id="locationTime">—</strong></div><div><span>定位精度</span><strong id="locationAccuracy">—</strong></div></div></div>
+        <div class="modal-actions"><a class="text-button" id="locationOsmLink" href="#" target="_blank" rel="noopener noreferrer">在 OpenStreetMap 中打开 <svg class="icon"><use href="#i-arrow-right"></use></svg></a><button class="btn btn-quiet" type="button" data-close="locationModal">关闭</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="passwordModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="passwordModal"></div>
+    <div class="modal-panel modal-panel-narrow" role="dialog" aria-modal="true" aria-labelledby="passwordTitle">
+      <div class="modal-head"><div><span class="card-kicker">SECURITY</span><h2 id="passwordTitle">修改密码</h2><p>修改成功后会退出其他设备的登录</p></div><button class="icon-btn modal-close" type="button" data-close="passwordModal" aria-label="关闭修改密码窗口"><svg class="icon"><use href="#i-x"></use></svg></button></div>
+      <form class="modal-body" id="passwordForm" novalidate>
+        <label class="field"><span class="field-label">当前密码</span><input id="currentPassword" type="password" autocomplete="current-password" required></label>
+        <label class="field"><span class="field-label">新密码</span><input id="newPassword" type="password" autocomplete="new-password" placeholder="至少 8 位，包含字母和数字" required></label>
+        <label class="field"><span class="field-label">确认新密码</span><input id="confirmPassword" type="password" autocomplete="new-password" required></label>
+        <p class="form-note"><svg class="icon"><use href="#i-shield"></use></svg>密码由字母和数字组成，长度至少 8 位。</p>
+        <div class="modal-actions"><span class="submit-hint" id="passwordHint">修改后请使用新密码登录</span><div class="action-buttons"><button class="btn btn-quiet" type="button" data-close="passwordModal">取消</button><button class="btn btn-primary" type="submit" id="passwordSubmit">保存新密码</button></div></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="false"></div>
+  <script src="/map.js" defer></script>
+  <script src="/app.js" defer></script>
+</body>
+</html>

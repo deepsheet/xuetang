@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Local credentials and runtime files
+.env
+.env.*
+secrets/
+data/
+database/*.local.sql
+config/database.env
+
+# Build staging
+_package/
+_package-test/
+
+# Installer / test artifacts
+_mysql-*
+_downloads/
+.edge-*
+ui-*.png
+ui-*.mjs
+test-*.mjs
+crop-*.png
+
+# 本地验收截图（不是源码，不作为项目资源提交）
+check-*.png
+
+# 操作系统元数据
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / 代理运行日志
+.waylog/
+*.log

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1e6b52">
+  <title>登录 · 学徒考勤</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/login.css">
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="auth-story" aria-labelledby="storyTitle">
+      <div class="story-top">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 4C11.2 4 4.8 8.1 4.8 14.1A5.9 5.9 0 0 0 10.7 20C16.7 20 20 12.8 20 4Z"></path>
+            <path d="M7.2 17.2c2.2-4.1 5.2-7.1 9.3-9.2"></path>
+          </svg>
+        </span>
+        <span class="brand-copy"><strong>学徒考勤</strong><small>APPRENTICE ATTENDANCE</small></span>
+      </div>
+
+      <div class="story-body">
+        <span class="story-kicker">成长，有迹可循</span>
+        <h1 id="storyTitle">把每一次到场，<br><em>写成成长的刻度。</em></h1>
+        <p>登录你的学徒账号，完成到校签到、离校签退，查看在训时长与学习任务。</p>
+        <ul class="story-points">
+          <li><span>01</span> 到校签到，记录位置</li>
+          <li><span>02</span> 离校签退，累计时长</li>
+          <li><span>03</span> 接收任务，跟进成长</li>
+        </ul>
+      </div>
+
+      <div class="story-foot">
+        <span class="live-dot" aria-hidden="true"></span>
+        MySQL 数据库已连接
+      </div>
+    </section>
+
+    <section class="auth-panel" aria-label="账号登录">
+      <div class="auth-card">
+        <div class="auth-loading" id="authLoading">
+          <span class="spinner" aria-hidden="true"></span>
+          <p>正在准备登录…</p>
+        </div>
+
+        <div id="authError" class="auth-error" role="alert" hidden></div>
+
+        <form id="loginForm" class="auth-form" hidden novalidate>
+          <header class="form-head">
+            <span class="form-kicker">WELCOME BACK</span>
+            <h2>登录学徒考勤</h2>
+            <p>使用管理员分发的学号或工号登录。</p>
+          </header>
+
+          <label class="field">
+            <span>学号 / 工号</span>
+            <input id="loginNumber" name="number" type="text" inputmode="text" autocomplete="username" placeholder="例如 S2026-0001" required>
+          </label>
+
+          <label class="field">
+            <span>密码</span>
+            <div class="password-wrap">
+              <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="输入登录密码" required>
+              <button class="password-toggle" type="button" data-toggle-password="loginPassword" aria-label="显示密码">显示</button>
+            </div>
+          </label>
+
+          <button class="btn btn-primary btn-block" type="submit" id="loginSubmit">登录</button>
+          <p class="form-note">账号由管理员注册后分发，无法自行注册。</p>
+        </form>
+
+        <form id="setupForm" class="auth-form" hidden novalidate>
+          <header class="form-head">
+            <span class="form-kicker">FIRST RUN</span>
+            <h2>初始化管理员</h2>
+            <p>首次使用，请创建第一个管理员账号。</p>
+          </header>
+
+          <label class="field">
+            <span>管理员姓名</span>
+            <input id="setupName" name="displayName" type="text" maxlength="50" autocomplete="name" placeholder="例如 张老师" required>
+          </label>
+
+          <label class="field">
+            <span>登录密码</span>
+            <div class="password-wrap">
+              <input id="setupPassword" name="password" type="password" autocomplete="new-password" placeholder="至少 8 位，包含字母和数字" required>
+              <button class="password-toggle" type="button" data-toggle-password="setupPassword" aria-label="显示密码">显示</button>
+            </div>
+          </label>
+
+          <label class="field">
+            <span>确认密码</span>
+            <input id="setupConfirm" name="confirm" type="password" autocomplete="new-password" placeholder="再次输入密码" required>
+          </label>
+
+          <button class="btn btn-primary btn-block" type="submit" id="setupSubmit">创建管理员并登录</button>
+          <p class="form-note">系统会自动分配工号，例如 T2026-0001。</p>
+        </form>
+
+        <form id="changeForm" class="auth-form" hidden novalidate>
+          <header class="form-head">
+            <span class="form-kicker">FIRST LOGIN</span>
+            <h2>修改初始密码</h2>
+            <p>为了账号安全，首次登录需要修改密码。</p>
+          </header>
+
+          <label class="field">
+            <span>当前密码</span>
+            <input id="changeCurrent" name="currentPassword" type="password" autocomplete="current-password" required>
+          </label>
+
+          <label class="field">
+            <span>新密码</span>
+            <div class="password-wrap">
+              <input id="changePassword" name="newPassword" type="password" autocomplete="new-password" placeholder="至少 8 位，包含字母和数字" required>
+              <button class="password-toggle" type="button" data-toggle-password="changePassword" aria-label="显示密码">显示</button>
+            </div>
+          </label>
+
+          <label class="field">
+            <span>确认新密码</span>
+            <input id="changeConfirm" name="confirm" type="password" autocomplete="new-password" required>
+          </label>
+
+          <button class="btn btn-primary btn-block" type="submit" id="changeSubmit">保存新密码并继续</button>
+          <p class="form-note">修改成功后，其他设备上的登录会失效。</p>
+        </form>
+
+        <div class="auth-meta">
+          <span>数据存储于本机 MySQL</span>
+          <span>·</span>
+          <span>仅授权账号可访问</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/login.js" defer></script>
+</body>
+</html>

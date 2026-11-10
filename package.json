@@ -1,0 +1,13 @@
+{
+  "name": "apprentice-attendance",
+  "version": "1.0.0",
+  "private": true,
+  "description": "学徒考勤、在校时长与任务管理系统",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.3.0",
+    "mysql2": "^3.24.6"
+  }
+}

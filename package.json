@@ -2,7 +2,7 @@
   "name": "apprentice-attendance",
   "version": "1.0.0",
   "private": true,
-  "description": "学徒考勤、在校时长与任务管理系统",
+  "description": "深表学堂考勤系统：在校时长与任务管理",
   "scripts": {
     "start": "node server.js"
   },

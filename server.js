@@ -145,7 +145,7 @@ async function start() {
   const server = app.listen(config.port, config.host, function () {
     const url = "http://localhost:" + config.port;
     console.log("");
-    console.log("  学徒考勤系统已启动");
+    console.log("  深表学堂考勤系统已启动");
     console.log("  本地地址: " + url);
     console.log("  数据库: " + config.db.database + " @ " + config.db.host + ":" + config.db.port);
     console.log("  关闭此窗口即可停止服务");

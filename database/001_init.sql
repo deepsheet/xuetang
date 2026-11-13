@@ -1,5 +1,5 @@
 -- ============================================================
--- 学徒考勤系统 · MySQL 8.4 初始表结构
+-- 深表学堂考勤系统系统 · MySQL 8.4 初始表结构
 -- 数据库：xueting
 -- 说明：学号/工号由系统注册时分配，不使用班级/工种字段
 -- ============================================================
@@ -201,7 +201,7 @@ VALUES (2026, 'student', 1), (2026, 'staff', 1);
 
 INSERT IGNORE INTO xt_app_settings (setting_key, setting_value)
 VALUES
-  ('school_name', '"学徒考勤"'),
+  ('school_name', '"深表学堂考勤系统"'),
   ('timezone', '"Asia/Shanghai"'),
   ('attendance_radius_m', '300'),
   ('session_ttl_hours', '12');

@@ -1,4 +1,4 @@
-﻿param(
+param(
   [string]$MysqlExe = "",
   [string]$RootPassword = "",
   [string]$AppPassword = ""
@@ -48,7 +48,7 @@ function Find-Mysql([string]$ExplicitPath) {
 }
 
 Write-Host ""
-Write-Host "  学徒考勤系统 · 数据库初始化" -ForegroundColor Green
+Write-Host "  深表学堂考勤系统 · 数据库初始化" -ForegroundColor Green
 Write-Host "  将创建数据库、应用账号并执行表结构迁移"
 Write-Host ""
 

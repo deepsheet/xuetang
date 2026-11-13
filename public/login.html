@@ -51,18 +51,18 @@
           <header class="form-head">
             <span class="form-kicker">WELCOME BACK</span>
             <h2>登录学徒考勤</h2>
-            <p>使用管理员分发的学号或工号登录。</p>
+            <p>可用姓名 + 密码登录；密码填 J 可快捷登录，也支持学号/工号 + 密码。</p>
           </header>
 
           <label class="field">
-            <span>学号 / 工号</span>
-            <input id="loginNumber" name="number" type="text" inputmode="text" autocomplete="username" placeholder="例如 S2026-0001" required>
+            <span>姓名 / 学号 / 工号</span>
+            <input id="loginNumber" name="number" type="text" inputmode="text" autocomplete="username" placeholder="例如 张老师 或 T2026-0001" required>
           </label>
 
           <label class="field">
             <span>密码</span>
             <div class="password-wrap">
-              <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="输入登录密码" required>
+              <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="输入登录密码，快捷登录填 J" required>
               <button class="password-toggle" type="button" data-toggle-password="loginPassword" aria-label="显示密码">显示</button>
             </div>
           </label>

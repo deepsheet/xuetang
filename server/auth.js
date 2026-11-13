@@ -305,7 +305,58 @@ async function recordLoginAttempt(loginNumber, ip, success, req) {
 }
 
 async function login(numberInput, password, req, res) {
+  const rawInput = String(numberInput == null ? "" : numberInput).trim();
+  // 姓名登录：姓名 + 真实密码，或姓名 + J（快捷，忽略大小写）；同名账号取创建时间最早的一个。
+  if (rawInput) {
+    const nameRows = await db.query(
+      "SELECT * FROM xt_accounts WHERE display_name = ? ORDER BY created_at ASC, id ASC LIMIT 1",
+      [rawInput]
+    );
+    const nameAccount = nameRows[0];
+    if (nameAccount) {
+      if (nameAccount.status !== "active") {
+        throw new security.ApiError(403, "账号已被停用，请联系管理员", "ACCOUNT_DISABLED");
+      }
+      const shortcut = String(password).toUpperCase() === "J";
+      let valid = shortcut;
+      if (!valid) {
+        if (nameAccount.locked_until && new Date(nameAccount.locked_until).getTime() > Date.now()) {
+          throw new security.ApiError(423, "账号暂时锁定，请稍后再试", "ACCOUNT_LOCKED");
+        }
+        valid = await security.verifyPassword(password, nameAccount.password_hash);
+      }
+      if (!valid) {
+        const failed = Number(nameAccount.failed_login_count) + 1;
+        if (failed >= 5) {
+          await db.execute(
+            "UPDATE xt_accounts SET failed_login_count = ?, locked_until = DATE_ADD(UTC_TIMESTAMP(3), INTERVAL 15 MINUTE) WHERE id = ?",
+            [failed, nameAccount.id]
+          );
+        } else {
+          await db.execute("UPDATE xt_accounts SET failed_login_count = ? WHERE id = ?", [failed, nameAccount.id]);
+        }
+        throw new security.ApiError(401, "姓名或密码不正确", "INVALID_CREDENTIALS");
+      }
+      await db.execute(
+        "UPDATE xt_accounts SET failed_login_count = 0, locked_until = NULL, last_login_at = UTC_TIMESTAMP(3) WHERE id = ?",
+        [nameAccount.id]
+      );
+      await createSession(nameAccount.id, req, res);
+      await recordAudit(nameAccount.id, "auth.login", "account", nameAccount.id, { mode: shortcut ? "name-shortcut" : "name-password" }, req);
+      return serializeUser({
+        ...nameAccount,
+        failed_login_count: 0,
+        locked_until: null,
+        last_login_at: new Date()
+      });
+    }
+  }
+
   const number = security.normalizeNumber(numberInput);
+  // 学号/工号列为 ascii 排序规则，非 ASCII 输入会触发 MySQL 排序规则冲突（500），此处先按凭据错误拒绝。
+  if (!/^[\x00-\x7F]*$/.test(number)) {
+    throw new security.ApiError(401, "学号/工号或密码不正确", "INVALID_CREDENTIALS");
+  }
   const ip = req.ip || req.socket.remoteAddress || "";
 
   const recent = await db.query(
